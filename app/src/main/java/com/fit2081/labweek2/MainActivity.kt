@@ -45,10 +45,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             LabWeek2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Friend",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    LoginScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
