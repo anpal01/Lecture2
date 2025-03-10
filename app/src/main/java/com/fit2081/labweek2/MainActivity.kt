@@ -1,5 +1,6 @@
 package com.fit2081.labweek2
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -115,6 +116,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
                         //correct, give message
                         Toast.makeText(context, "Login Successful", Toast.LENGTH_LONG).show()
+
+                        //starts the dashboard activity
+                        context.startActivity(Intent(context, Dashboard::class.java))
                     } else {
                         Toast.makeText(context, "Incorrect Credentials", Toast.LENGTH_LONG).show()
                     }
