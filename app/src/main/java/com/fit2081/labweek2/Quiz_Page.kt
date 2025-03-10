@@ -26,6 +26,7 @@ class Quiz_Page : ComponentActivity() {
                     )
                 }
             }
+            MyBottomBar()
         }
     }
 }

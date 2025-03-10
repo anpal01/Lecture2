@@ -47,14 +47,14 @@ class Dashboard : ComponentActivity() {
 
 @Composable
 fun MyBottomBar() {
-    val context = LocalContext.current
+    val context = LocalContext.current //if looking to make links, make sure to involve the local context
     Scaffold(
         bottomBar = {
             BottomAppBar(
                 modifier = Modifier.height(60.dp),
                 content = {
                     IconButton(onClick = { /* TODO: Add action */ }) {
-                        Icon(Icons.Filled.Check, contentDescription = "Check icon")
+                        Icon(Icons.Filled.Check, contentDescription = "Check icon") //defines the icon and the text
                     }
                     IconButton(onClick = { /* TODO: Navigate to another screen */ }) {
                         Icon(Icons.Filled.Home, contentDescription = "Go Home")
