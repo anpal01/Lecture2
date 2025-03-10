@@ -1,5 +1,6 @@
 package com.fit2081.labweek2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,33 +39,15 @@ class Dashboard : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //gives all composables this theme
-            LabWeek2Theme {
+            MyBottomBar()
 
-                //gives basic layout structure for apps
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column (
-                        modifier = Modifier.fillMaxSize().padding(innerPadding),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-
-                    ) {
-                        Text(
-                            text =  "Dashboard",
-                            style = TextStyle(fontSize = 40.sp)
-
-                        )
-
-                    }
-                    MyBottomBar()
-                }
-            }
         }
     }
 }
 
 @Composable
 fun MyBottomBar() {
+    val context = LocalContext.current
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -75,8 +59,8 @@ fun MyBottomBar() {
                     IconButton(onClick = { /* TODO: Navigate to another screen */ }) {
                         Icon(Icons.Filled.Home, contentDescription = "Go Home")
                     }
-                    Button(onClick = { /* TODO: Add button action */ }) {
-                        Text("Click Me")
+                    Button(onClick = { context.startActivity(Intent(context, Quiz_Page::class.java)) }) {
+                        Text("Quiz Time!")
                     }
                 }
             )
