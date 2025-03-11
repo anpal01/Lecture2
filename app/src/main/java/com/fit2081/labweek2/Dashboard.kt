@@ -2,7 +2,6 @@ package com.fit2081.labweek2
 
 import android.content.Intent
 import android.os.Bundle
-import android.speech.ModelDownloadListener
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
@@ -10,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -92,22 +90,26 @@ fun DashboardScreen() {
 
 @Composable
 fun MyBottomBar() {
-    val context = LocalContext.current //if looking to make links, make sure to involve the local context
+    val context =
+        LocalContext.current //if looking to make links, make sure to involve the local context
 
-            BottomAppBar(
-                modifier = Modifier.height(60.dp),
-                content = {
-                    IconButton(onClick = { /* TODO: Add action */ }) {
-                        Icon(Icons.Filled.Check, contentDescription = "Check icon") //defines the icon and the text
-                    }
-                    IconButton(onClick = { /* TODO: Navigate to another screen */ }) {
-                        Icon(Icons.Filled.Home, contentDescription = "Go Home")
-                    }
-                    Button(onClick = { context.startActivity(Intent(context, Quiz_Page::class.java)) }) {
-                        Text("Quiz Time!")
-                    }
-                }
-            )
+    BottomAppBar(
+        modifier = Modifier.height(60.dp),
+        content = {
+            IconButton(onClick = { /* TODO: Add action */ }) {
+                Icon(
+                    Icons.Filled.Check,
+                    contentDescription = "Check icon"
+                ) //defines the icon and the text
+            }
+            IconButton(onClick = { /* TODO: Navigate to another screen */ }) {
+                Icon(Icons.Filled.Home, contentDescription = "Go Home")
+            }
+            Button(onClick = { context.startActivity(Intent(context, Quiz_Page::class.java)) }) {
+                Text("Quiz Time!")
+            }
+        }
+    )
 }
 
 @Composable
@@ -162,40 +164,40 @@ fun TopBar() {
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
 
-            CenterAlignedTopAppBar(
+    CenterAlignedTopAppBar(
 
-                //customises the colour and font colour of the
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
+        //customises the colour and font colour of the
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+        ),
 
-                title = {
-                    Text(
-                        "Top Bar",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-
-                //the back button + its functionality
-                navigationIcon = {
-                    IconButton(onClick = {
-                        onBackPressedDispatcher?.onBackPressed()
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localised Description"
-                        )
-                    }
-                },
-
-                //any other actions we can do
-                actions = {
-                    DropdownMenu()
-                },
-                scrollBehavior = scrollBehaviour,
+        title = {
+            Text(
+                "Top Bar",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
+        },
+
+        //the back button + its functionality
+        navigationIcon = {
+            IconButton(onClick = {
+                onBackPressedDispatcher?.onBackPressed()
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Localised Description"
+                )
+            }
+        },
+
+        //any other actions we can do
+        actions = {
+            DropdownMenu()
+        },
+        scrollBehavior = scrollBehaviour,
+    )
 
 
 }
