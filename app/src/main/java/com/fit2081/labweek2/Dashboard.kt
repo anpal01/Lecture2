@@ -60,18 +60,32 @@ class Dashboard : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LabWeek2Theme {
-                Scaffold (
-                    modifier = Modifier.fillMaxSize(),)
-                { innerPadding ->
-                    Column (modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        TopBar()
-                    }
-                }
+                DashboardScreen()
             }
 
-            MyBottomBar()
+        }
+    }
+}
 
+
+@Composable
+fun DashboardScreen() {
+    Scaffold(
+        topBar = { TopBar() }, // Include Top Bar
+        bottomBar = { MyBottomBar() }, // Include Bottom Bar
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /* TODO: Add FAB action */ }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add something")
+            }
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Welcome to Dashboard!", fontSize = 24.sp)
         }
     }
 }
@@ -79,8 +93,7 @@ class Dashboard : ComponentActivity() {
 @Composable
 fun MyBottomBar() {
     val context = LocalContext.current //if looking to make links, make sure to involve the local context
-    Scaffold(
-        bottomBar = {
+
             BottomAppBar(
                 modifier = Modifier.height(60.dp),
                 content = {
@@ -95,20 +108,6 @@ fun MyBottomBar() {
                     }
                 }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /* TODO: Add FAB action */ }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add something")
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Hello, Bottom Bar!", fontSize = 24.sp)
-        }
-    }
 }
 
 @Composable
@@ -162,10 +161,7 @@ fun TopBar() {
     //takes care of when back button is pressed
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-    //the layout for the top bar
-    Scaffold(
 
-        topBar = {
             CenterAlignedTopAppBar(
 
                 //customises the colour and font colour of the
@@ -200,14 +196,7 @@ fun TopBar() {
                 },
                 scrollBehavior = scrollBehaviour,
             )
-        }
 
-    ) { innerPadding -> //the text afterwards
-        Text(
-            modifier = Modifier.padding(innerPadding),
-            text = "Week 2 Lab"
-        )
-    }
 
 }
 
