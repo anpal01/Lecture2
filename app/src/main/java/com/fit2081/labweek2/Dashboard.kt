@@ -58,35 +58,30 @@ class Dashboard : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LabWeek2Theme {
-                DashboardScreen()
+                Scaffold(
+                    topBar = { TopBar() }, // Include Top Bar
+                    bottomBar = { MyBottomBar() }, // Include Bottom Bar
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = { /* TODO: Add FAB action */ }) {
+                            Icon(Icons.Filled.Add, contentDescription = "Add something")
+                        }
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        //add content here
+                    }
+                }
             }
 
         }
     }
 }
 
-
-@Composable
-fun DashboardScreen() {
-    Scaffold(
-        topBar = { TopBar() }, // Include Top Bar
-        bottomBar = { MyBottomBar() }, // Include Bottom Bar
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /* TODO: Add FAB action */ }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add something")
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Welcome to Dashboard!", fontSize = 24.sp)
-        }
-    }
-}
 
 @Composable
 fun MyBottomBar() {
