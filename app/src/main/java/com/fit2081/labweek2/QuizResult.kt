@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -62,6 +63,10 @@ class QuizResult : ComponentActivity() {
                                 contentDescription = "Failed",
                                 modifier = Modifier.size(100.dp)
                             )
+                        }
+                        //stop activity when user clicks this button
+                        Button(onClick = {finish()}) {
+                            Text(text = "Quiz Completed!")
                         }
                     }
                 }
