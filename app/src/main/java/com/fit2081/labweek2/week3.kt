@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -32,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -166,6 +168,10 @@ class week3 : ComponentActivity() {
                         }) {
                             Text(text = "Load Saved Values")
                         }
+
+
+
+
                     }
                 }
             }
@@ -270,4 +276,52 @@ fun countRowsByLocation(context: Context, fileName: String, location: String): I
     }
     //return count
     return count
+}
+
+
+@Composable
+fun CVSProcessorScreen(context: Context){
+
+    //var to hold location input
+    var location by remember { mutableStateOf("") }
+
+    //holds count of rows with matching locations
+    var count by remember { mutableStateOf(0) }
+
+    //hold text to display result
+    var resultText by remember { mutableStateOf("Result: 0") }
+
+    val context = LocalContext.current
+
+    //text field for entering the location
+    TextField(
+        value = location,
+        onValueChange = {location = it},
+        label = { Text("Enter Location") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    //button to kickstart csv processing
+    Button(onClick = {
+
+
+        count = countRowsByLocation(context, "data.csv", location)
+
+        //update text result
+        resultText = "Result: $count"
+    },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+        ) {
+        Text("Process CSV")
+    }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+    Text(text = resultText)
 }
