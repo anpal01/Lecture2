@@ -169,6 +169,8 @@ class week3 : ComponentActivity() {
                             Text(text = "Load Saved Values")
                         }
 
+                        CVSProcessorScreen(this@week3, modifier = Modifier.padding(innerPadding))
+
 
 
 
@@ -280,7 +282,7 @@ fun countRowsByLocation(context: Context, fileName: String, location: String): I
 
 
 @Composable
-fun CVSProcessorScreen(context: Context){
+fun CVSProcessorScreen(context: Context, modifier: Modifier){
 
     //var to hold location input
     var location by remember { mutableStateOf("") }
