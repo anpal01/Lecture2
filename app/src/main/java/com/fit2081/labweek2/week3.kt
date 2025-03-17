@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +35,8 @@ class week3 : ComponentActivity() {
             //variables that retrieve timepicker dialogs
             //var mTimePickerDialog = TimePickerFun(mTime)
             //var DatePickerDialog = DatePickerFun(mDate)
+
+            var sliderValue by remember { mutableStateOf(10f) }
 
 
             LabWeek2Theme {
