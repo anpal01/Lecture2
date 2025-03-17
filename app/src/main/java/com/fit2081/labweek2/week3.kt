@@ -2,6 +2,7 @@ package com.fit2081.labweek2
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.CalendarContract.Calendars
@@ -42,7 +43,7 @@ class week3 : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
-            val mContent = LocalContext.current
+            val mContext = LocalContext.current
 
             val mDate = remember { mutableStateOf("") }
             val mTime = remember { mutableStateOf("") }
@@ -120,6 +121,47 @@ class week3 : ComponentActivity() {
                             progress = {sliderValue / 100f},
                             modifier = Modifier.padding(10.dp)
                         )
+
+
+                        //retrieve instance of shared prefs to save/restore data
+                        //val sharedPref = mContext.getSharedPreferences("doc", Context.MODE_PRIVATE).edit() //file name, only calling app can access file, opens for updates
+
+
+                        //saves all of the info input
+                        Button(onClick = {
+                            val sharedPref =
+                                mContext.getSharedPreferences("doc", Context.MODE_PRIVATE).edit()
+
+                            sharedPref.putString("date", mDate.value)
+                            sharedPref.putString("time", mTime.value)
+                            sharedPref.putString("text", mTextFieldValue.value)
+                            sharedPref.putBoolean("checkbox", mCheckBoxState.value)
+                            sharedPref.putInt("slider", sliderValue.toInt())
+                            sharedPref.apply()
+                        }) {
+                            Text(text = "Save Data")
+                        }
+
+                        //loads saved data, provides default values if none
+                        Button(onClick = {
+
+                            val sharedPref = mContext.getSharedPreferences("doc", Context.MODE_PRIVATE)
+
+                            val loadDate = sharedPref.getString("date", "17/03/2025")
+                            val loadTime = sharedPref.getString("time", "9:00")
+                            val loadText = sharedPref.getString("text", "")
+                            val loadCheckBox = sharedPref.getBoolean("checkbox", false)
+                            val loadSlider = sharedPref.getInt("slider", 0).toFloat()
+
+                            //replaces the current values with the loaded ones
+                            mDate.value = loadDate.toString()
+                            mTime.value = loadTime.toString()
+                            mTextFieldValue.value = loadText.toString()
+                            mCheckBoxState.value = loadCheckBox
+                            sliderValue = loadSlider
+                        }) {
+                            Text(text =  "Load Saved Values")
+                        }
                     }
                 }
             }
