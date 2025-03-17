@@ -72,7 +72,7 @@ class Week3 : ComponentActivity() {
                         Button(onClick = { mDatePickerDialog.show() }) {
                             Text(text = "Select the Date")
                         }
-                        Text(text = "Selected Date: $(mDate.value)")
+                        Text(text = "Selected Date: ${mDate.value}")
 
                         Spacer(Modifier.height(40.dp))
 
@@ -165,7 +165,7 @@ class Week3 : ComponentActivity() {
                             Text(text = "Load Saved Values")
                         }
 
-                       // CSVProcesorScreen(this@Week3, modifier = Modifier.padding(innerPadding))
+                        CSVProcesorScreen(this@Week3, modifier = Modifier.padding(innerPadding))
                     }
                 }
             }
@@ -242,80 +242,80 @@ fun TimePickerFunction(mTime: MutableState<String>): TimePickerDialog { //the pa
 }
 
 
-////counts row number
-//fun countRowsByLocation(context: Context, fileName: String, location: String): Int {
-//
-//    var count = 0
-//    var assets = context.assets //get asset manager
-//
-//    //try to open csv and read each line
-//    try {
-//        val inputStream = assets.open(fileName) //open file
-//
-//        //create buffer for reading
-//        val reader = BufferedReader(InputStreamReader(inputStream))
-//        reader.useLines { lines ->
-//            lines.drop(1).forEach { line -> //skip header
-//                val values = line.split(",") //split each line into values
-//
-//                //check if row has enough column
-//                //also if 7th column matches the location
-//                if(values.size > 6 && values[7].trim() == location.trim()) {
-//                    count++ //increment
-//                }
-//            }
-//        }
-//    } catch (e: Exception) {
-//        //error message or handling of errors in reading files
-//    }
-//    //return count
-//    return count
-//}
+//counts row number
+fun countRowsByLocation(context: Context, fileName: String, location: String): Int {
+
+    var count = 0
+    var assets = context.assets //get asset manager
+
+    //try to open csv and read each line
+    try {
+        val inputStream = assets.open(fileName) //open file
+
+        //create buffer for reading
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        reader.useLines { lines ->
+            lines.drop(1).forEach { line -> //skip header
+                val values = line.split(",") //split each line into values
+
+                //check if row has enough column
+                //also if 7th column matches the location
+                if(values.size > 6 && values[7].trim() == location.trim()) {
+                    count++ //increment
+                }
+            }
+        }
+    } catch (e: Exception) {
+        //error message or handling of errors in reading files
+    }
+    //return count
+    return count
+}
 
 
-//@Composable
-//fun CSVProcesorScreen(context: Context, modifier: Modifier){
-//
-//    //var to hold location input
-//    var location by remember { mutableStateOf("") }
-//
-//    //holds count of rows with matching locations
-//    var count by remember { mutableStateOf(0) }
-//
-//    //hold text to display result
-//    var resultText by remember { mutableStateOf("Result: 0") }
-//
-//    val context = LocalContext.current
-//
-//    //text field for entering the location
-//    TextField(
-//        value = location,
-//        onValueChange = {location = it},
-//        label = { Text("Enter Location") },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(bottom = 16.dp)
-//    )
-//
-//    Spacer(modifier = Modifier.height(16.dp))
-//
-//    //button to kickstart csv processing
-//    Button(onClick = {
-//
-//
-//        count = countRowsByLocation(context, "data.csv", location)
-//
-//        //update text result
-//        resultText = "Result: $count"
-//    },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(bottom = 16.dp)
-//        ) {
-//        Text("Process CSV")
-//    }
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//    Text(text = resultText)
-//}
+@Composable
+fun CSVProcesorScreen(context: Context, modifier: Modifier){
+
+    //var to hold location input
+    var location by remember { mutableStateOf("") }
+
+    //holds count of rows with matching locations
+    var count by remember { mutableStateOf(0) }
+
+    //hold text to display result
+    var resultText by remember { mutableStateOf("Result: 0") }
+
+    val context = LocalContext.current
+
+    //text field for entering the location
+    TextField(
+        value = location,
+        onValueChange = {location = it},
+        label = { Text("Enter Location") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    //button to kickstart csv processing
+    Button(onClick = {
+
+
+        count = countRowsByLocation(context, "data.csv", location)
+
+        //update text result
+        resultText = "Result: $count"
+    },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+        ) {
+        Text("Process CSV")
+    }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+    Text(text = resultText)
+}
