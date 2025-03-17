@@ -36,6 +36,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fit2081.labweek2.ui.theme.LabWeek2Theme
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class week3 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -237,4 +239,35 @@ fun TimePickerFun(mTime: MutableState<String>): TimePickerDialog { //the paramet
             mTime.value = "$mHour:$mMinute" //listened values are than put into the initial hour and minute
         }, mHour, mMinute, false //use 24hr time or not
     )
+}
+
+
+//counts row number
+fun countRowsByLocation(context: Context, fileName: String, location: String): Int {
+
+    var count = 0
+    var assets = context.assets //get asset manager
+
+    //try to open csv and read each line
+    try {
+        val inputStream = assets.open(fileName) //open file
+
+        //create buffer for reading
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        reader.useLines { lines ->
+            lines.drop(1).forEach { line -> //skip header
+                val values = line.split(",") //split each line into values
+
+                //check if row has enough column
+                //also if 7th column matches the location
+                if(values.size > 6 && values[7].trim() == location.trim()) {
+                    count++ //increment
+                }
+            }
+        }
+    } catch (e: Exception) {
+        //error message or handling of errors in reading files
+    }
+    //return count
+    return count
 }
