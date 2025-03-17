@@ -6,22 +6,34 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.CalendarContract.Calendars
 import android.widget.DatePicker
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.fit2081.labweek2.ui.theme.LabWeek2Theme
 
 class week3 : ComponentActivity() {
@@ -36,21 +48,79 @@ class week3 : ComponentActivity() {
             val mTime = remember { mutableStateOf("") }
 
             val mTextFieldValue = remember { mutableStateOf("") }
-            val mCheckBoxState = remember { mutableStateOf("") }
+            val mCheckBoxState = remember { mutableStateOf(false) }
 
             //variables that retrieve timepicker dialogs
-            //var mTimePickerDialog = TimePickerFun(mTime)
-            var DatePickerDialog = DatePickerFun(mDate)
+            var mTimePickerDialog = TimePickerFun(mTime)
+            var mDatePickerDialog = DatePickerFun(mDate)
 
             var sliderValue by remember { mutableStateOf(10f) }
 
 
             LabWeek2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    Column (
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
+                        //button to open date picker
+                        Button(onClick = {mDatePickerDialog.show()}) {
+                            Text(text = "Select the Date")
+                        }
+                        Text(text = "Selected Date: $(mDate.value)")
+
+                        Spacer(Modifier.height(40.dp))
+
+
+                        //button for time picker
+
+                        Button(onClick = {mTimePickerDialog.show()}) {
+                            Text(text = "Select the Time")
+                        }
+                        Text(text = "Selected Time: ${mTime.value}")
+
+                        //textfield
+                        TextField(
+                            value = mTextFieldValue.value,
+                            onValueChange = {mTextFieldValue.value = it},
+                            label = { Text("Enter Text")
+                            }
+                        )
+                        Spacer(Modifier.height(40.dp))
+
+                        //checklbox
+                        Checkbox(
+                            checked = mCheckBoxState.value, //retrieves the value of the variable
+                            onCheckedChange = {mCheckBoxState.value = it}
+                            )
+                        
+                        Spacer(Modifier.height(20.dp))
+
+                        //progress bar
+
+                        Text(text = "Slider Value: ${sliderValue.toInt()}")
+
+                        Slider(
+                            value = sliderValue,
+                            onValueChange = {sliderValue = it},
+                            valueRange = 0f..100f
+                        )
+
+                        Spacer(Modifier.height(40.dp))
+
+                        Text("Progress Bar")
+
+                        Spacer(Modifier.height(20.dp))
+                        
+                        LinearProgressIndicator(
+                            progress = {sliderValue / 100f},
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
                 }
             }
         }
