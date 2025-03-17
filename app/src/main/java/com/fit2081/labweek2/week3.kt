@@ -60,7 +60,7 @@ class week3 : ComponentActivity() {
 
             LabWeek2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column (
+                    Column(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize(),
@@ -69,7 +69,7 @@ class week3 : ComponentActivity() {
                     ) {
 
                         //button to open date picker
-                        Button(onClick = {mDatePickerDialog.show()}) {
+                        Button(onClick = { mDatePickerDialog.show() }) {
                             Text(text = "Select the Date")
                         }
                         Text(text = "Selected Date: $(mDate.value)")
@@ -79,7 +79,7 @@ class week3 : ComponentActivity() {
 
                         //button for time picker
 
-                        Button(onClick = {mTimePickerDialog.show()}) {
+                        Button(onClick = { mTimePickerDialog.show() }) {
                             Text(text = "Select the Time")
                         }
                         Text(text = "Selected Time: ${mTime.value}")
@@ -87,8 +87,9 @@ class week3 : ComponentActivity() {
                         //textfield
                         TextField(
                             value = mTextFieldValue.value,
-                            onValueChange = {mTextFieldValue.value = it},
-                            label = { Text("Enter Text")
+                            onValueChange = { mTextFieldValue.value = it },
+                            label = {
+                                Text("Enter Text")
                             }
                         )
                         Spacer(Modifier.height(40.dp))
@@ -96,9 +97,9 @@ class week3 : ComponentActivity() {
                         //checklbox
                         Checkbox(
                             checked = mCheckBoxState.value, //retrieves the value of the variable
-                            onCheckedChange = {mCheckBoxState.value = it}
-                            )
-                        
+                            onCheckedChange = { mCheckBoxState.value = it }
+                        )
+
                         Spacer(Modifier.height(20.dp))
 
                         //progress bar
@@ -107,7 +108,7 @@ class week3 : ComponentActivity() {
 
                         Slider(
                             value = sliderValue,
-                            onValueChange = {sliderValue = it},
+                            onValueChange = { sliderValue = it },
                             valueRange = 0f..100f
                         )
 
@@ -116,9 +117,9 @@ class week3 : ComponentActivity() {
                         Text("Progress Bar")
 
                         Spacer(Modifier.height(20.dp))
-                        
+
                         LinearProgressIndicator(
-                            progress = {sliderValue / 100f},
+                            progress = { sliderValue / 100f },
                             modifier = Modifier.padding(10.dp)
                         )
 
@@ -145,7 +146,8 @@ class week3 : ComponentActivity() {
                         //loads saved data, provides default values if none
                         Button(onClick = {
 
-                            val sharedPref = mContext.getSharedPreferences("doc", Context.MODE_PRIVATE)
+                            val sharedPref =
+                                mContext.getSharedPreferences("doc", Context.MODE_PRIVATE)
 
                             val loadDate = sharedPref.getString("date", "17/03/2025")
                             val loadTime = sharedPref.getString("time", "9:00")
@@ -160,7 +162,7 @@ class week3 : ComponentActivity() {
                             mCheckBoxState.value = loadCheckBox
                             sliderValue = loadSlider
                         }) {
-                            Text(text =  "Load Saved Values")
+                            Text(text = "Load Saved Values")
                         }
                     }
                 }
@@ -169,13 +171,6 @@ class week3 : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Composable
 fun DatePickerFun(mDate: MutableState<String>): DatePickerDialog { //the parameters and the return value after colon
