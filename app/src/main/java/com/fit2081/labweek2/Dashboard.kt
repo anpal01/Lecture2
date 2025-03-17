@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.fit2081.labweek2.ui.theme.LabWeek2Theme
 
 class Dashboard : ComponentActivity() {
@@ -91,7 +90,7 @@ fun MyBottomBar() {
     BottomAppBar(
         modifier = Modifier.height(60.dp),
         content = {
-            IconButton(onClick = { context.startActivity(Intent(context, week3::class.java)) }) {
+            IconButton(onClick = { context.startActivity(Intent(context, Week3::class.java)) }) {
                 Icon(
                     Icons.Filled.Check,
                     contentDescription = "Check icon"

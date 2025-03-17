@@ -5,9 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.provider.CalendarContract.Calendars
 import android.widget.DatePicker
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -33,15 +31,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fit2081.labweek2.ui.theme.LabWeek2Theme
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class week3 : ComponentActivity() {
+class Week3 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -56,8 +52,8 @@ class week3 : ComponentActivity() {
             val mCheckBoxState = remember { mutableStateOf(false) }
 
             //variables that retrieve timepicker dialogs
-            var mTimePickerDialog = TimePickerFun(mTime)
-            var mDatePickerDialog = DatePickerFun(mDate)
+            var mTimePickerDialog = TimePickerFunction(mTime)
+            var mDatePickerDialog = DatePickerFunction(mDate)
 
             var sliderValue by remember { mutableStateOf(10f) }
 
@@ -169,11 +165,7 @@ class week3 : ComponentActivity() {
                             Text(text = "Load Saved Values")
                         }
 
-                        CVSProcessorScreen(this@week3, modifier = Modifier.padding(innerPadding))
-
-
-
-
+                       // CSVProcesorScreen(this@Week3, modifier = Modifier.padding(innerPadding))
                     }
                 }
             }
@@ -183,7 +175,7 @@ class week3 : ComponentActivity() {
 
 
 @Composable
-fun DatePickerFun(mDate: MutableState<String>): DatePickerDialog { //the parameters and the return value after colon
+fun DatePickerFunction(mDate: MutableState<String>): DatePickerDialog { //the parameters and the return value after colon
 
     //get current context
     val mContext = LocalContext.current
@@ -218,7 +210,7 @@ fun DatePickerFun(mDate: MutableState<String>): DatePickerDialog { //the paramet
 
 
 @Composable
-fun TimePickerFun(mTime: MutableState<String>): TimePickerDialog { //the parameters and the return value after colon
+fun TimePickerFunction(mTime: MutableState<String>): TimePickerDialog { //the parameters and the return value after colon
 
     //get current context
     val mContext = LocalContext.current
@@ -250,80 +242,80 @@ fun TimePickerFun(mTime: MutableState<String>): TimePickerDialog { //the paramet
 }
 
 
-//counts row number
-fun countRowsByLocation(context: Context, fileName: String, location: String): Int {
-
-    var count = 0
-    var assets = context.assets //get asset manager
-
-    //try to open csv and read each line
-    try {
-        val inputStream = assets.open(fileName) //open file
-
-        //create buffer for reading
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        reader.useLines { lines ->
-            lines.drop(1).forEach { line -> //skip header
-                val values = line.split(",") //split each line into values
-
-                //check if row has enough column
-                //also if 7th column matches the location
-                if(values.size > 6 && values[7].trim() == location.trim()) {
-                    count++ //increment
-                }
-            }
-        }
-    } catch (e: Exception) {
-        //error message or handling of errors in reading files
-    }
-    //return count
-    return count
-}
-
-
-@Composable
-fun CVSProcessorScreen(context: Context, modifier: Modifier){
-
-    //var to hold location input
-    var location by remember { mutableStateOf("") }
-
-    //holds count of rows with matching locations
-    var count by remember { mutableStateOf(0) }
-
-    //hold text to display result
-    var resultText by remember { mutableStateOf("Result: 0") }
-
-    val context = LocalContext.current
-
-    //text field for entering the location
-    TextField(
-        value = location,
-        onValueChange = {location = it},
-        label = { Text("Enter Location") },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-    )
-
-    Spacer(modifier = Modifier.height(16.dp))
-
-    //button to kickstart csv processing
-    Button(onClick = {
+////counts row number
+//fun countRowsByLocation(context: Context, fileName: String, location: String): Int {
+//
+//    var count = 0
+//    var assets = context.assets //get asset manager
+//
+//    //try to open csv and read each line
+//    try {
+//        val inputStream = assets.open(fileName) //open file
+//
+//        //create buffer for reading
+//        val reader = BufferedReader(InputStreamReader(inputStream))
+//        reader.useLines { lines ->
+//            lines.drop(1).forEach { line -> //skip header
+//                val values = line.split(",") //split each line into values
+//
+//                //check if row has enough column
+//                //also if 7th column matches the location
+//                if(values.size > 6 && values[7].trim() == location.trim()) {
+//                    count++ //increment
+//                }
+//            }
+//        }
+//    } catch (e: Exception) {
+//        //error message or handling of errors in reading files
+//    }
+//    //return count
+//    return count
+//}
 
 
-        count = countRowsByLocation(context, "data.csv", location)
-
-        //update text result
-        resultText = "Result: $count"
-    },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-        ) {
-        Text("Process CSV")
-    }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-    Text(text = resultText)
-}
+//@Composable
+//fun CSVProcesorScreen(context: Context, modifier: Modifier){
+//
+//    //var to hold location input
+//    var location by remember { mutableStateOf("") }
+//
+//    //holds count of rows with matching locations
+//    var count by remember { mutableStateOf(0) }
+//
+//    //hold text to display result
+//    var resultText by remember { mutableStateOf("Result: 0") }
+//
+//    val context = LocalContext.current
+//
+//    //text field for entering the location
+//    TextField(
+//        value = location,
+//        onValueChange = {location = it},
+//        label = { Text("Enter Location") },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(bottom = 16.dp)
+//    )
+//
+//    Spacer(modifier = Modifier.height(16.dp))
+//
+//    //button to kickstart csv processing
+//    Button(onClick = {
+//
+//
+//        count = countRowsByLocation(context, "data.csv", location)
+//
+//        //update text result
+//        resultText = "Result: $count"
+//    },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(bottom = 16.dp)
+//        ) {
+//        Text("Process CSV")
+//    }
+//
+//        Spacer(modifier = Modifier.height(16.dp))
+//
+//    Text(text = resultText)
+//}
