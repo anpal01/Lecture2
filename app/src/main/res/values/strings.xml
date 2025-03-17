@@ -3,4 +3,5 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_quiz_page">Quiz_Page</string>
     <string name="title_activity_quiz_result">QuizResult</string>
+    <string name="title_activity_week3">week3</string>
 </resources>

@@ -91,7 +91,7 @@ fun MyBottomBar() {
     BottomAppBar(
         modifier = Modifier.height(60.dp),
         content = {
-            IconButton(onClick = { /* TODO: Add action */ }) {
+            IconButton(onClick = { context.startActivity(Intent(context, week3::class.java)) }) {
                 Icon(
                     Icons.Filled.Check,
                     contentDescription = "Check icon"
