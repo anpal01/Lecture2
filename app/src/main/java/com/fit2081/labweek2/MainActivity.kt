@@ -157,24 +157,30 @@ fun LoginScreen2() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-// Error flags for validation
+// Error flags for validation, false no error, true there IS error
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
 
-
+//email field
     OutlinedTextField(
         value = email,
         onValueChange = {
             email = it
+
+            //checks email is valid, ! bc if email is valid, function returns true but since trying to sense error, there is NO ERROR = false
             emailError = !isValidEmail(it)
         },
         label = { Text("Email") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+
+        //iserror takes on emailerror
+        //if true (error present), what should the error message/visual look like?
         isError = emailError,
         modifier = Modifier.fillMaxWidth(),
         singleLine = true
     )
 
+    //if there IS an error, turn the textbox red + give it more padding so it stands out
     if (emailError) {
         Text(
             text = "Invalid Email",
@@ -183,16 +189,19 @@ fun LoginScreen2() {
         )
     }
 
+    //password field
     OutlinedTextField(
         value = password,
         onValueChange = {
             password = it
-            //check length of pw
+            //check length of pw, if less theres error, if not, nothing
             passwordError = it.length < 6
         },
         label = { Text("Password") },
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = PasswordVisualTransformation(), //password is not visible as you type
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+
+        //same deal, iserror takes on pwerror value and if there IS an error, the message should look like this
         isError = passwordError,
         modifier = Modifier.fillMaxWidth(),
         singleLine = true
@@ -207,6 +216,7 @@ fun LoginScreen2() {
     }
 
 
+    //button to move to dash if both credentials are correct
     Button(
         onClick = {
             emailError = !isValidEmail(email)
