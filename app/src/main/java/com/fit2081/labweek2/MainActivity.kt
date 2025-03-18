@@ -47,7 +47,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             LabWeek2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(modifier = Modifier.padding(innerPadding))
+                    //LoginScreen(modifier = Modifier.padding(innerPadding))
+
+                    Column(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        LoginScreen2()
+                    }
                 }
             }
         }
@@ -142,6 +150,9 @@ fun isValidEmail(email: String):Boolean {
 
 @Composable
 fun LoginScreen2() {
+
+    val context = LocalContext.current
+
     // Email and password state
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -170,6 +181,44 @@ fun LoginScreen2() {
             color = MaterialTheme.colorScheme.error,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp)
         )
+    }
+
+    OutlinedTextField(
+        value = password,
+        onValueChange = {
+            password = it
+            //check length of pw
+            passwordError = it.length < 6
+        },
+        label = { Text("Password") },
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        isError = passwordError,
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = true
+    )
+
+    if (passwordError) {
+        Text(
+            text = "Password must be at least 6 characters",
+            color = MaterialTheme.colorScheme.error,
+            modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+        )
+    }
+
+
+    Button(
+        onClick = {
+            emailError = !isValidEmail(email)
+            passwordError = password.length < 6
+
+            if (!emailError && !passwordError) {
+                context.startActivity(Intent(context, Dashboard::class.java))
+            }
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Login")
     }
 
 }
