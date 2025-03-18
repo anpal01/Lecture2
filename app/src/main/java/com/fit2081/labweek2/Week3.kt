@@ -165,7 +165,7 @@ class Week3 : ComponentActivity() {
                             Text(text = "Load Saved Values")
                         }
 
-                        CSVProcesorScreen(this@Week3, modifier = Modifier.padding(innerPadding))
+                        CSVProcesorScreen(this@Week3)
                     }
                 }
             }
@@ -274,7 +274,7 @@ fun countRowsByLocation(context: Context, fileName: String, location: String): I
 
 
 @Composable
-fun CSVProcesorScreen(context: Context, modifier: Modifier){
+fun CSVProcesorScreen(context: Context){
 
     //var to hold location input
     var location by remember { mutableStateOf("") }
