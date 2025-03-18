@@ -136,7 +136,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 }
 
 
-
+fun isValidEmail(email: String):Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
 
 @Composable
 fun LoginScreen2() {
