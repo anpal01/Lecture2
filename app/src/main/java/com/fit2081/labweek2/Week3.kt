@@ -138,7 +138,7 @@ class Week3 : ComponentActivity() {
                             sharedPref.putString("text", mTextFieldValue.value)
                             sharedPref.putBoolean("checkbox", mCheckBoxState.value)
                             sharedPref.putInt("slider", sliderValue.toInt())
-                            sharedPref.apply()
+                            sharedPref.apply() //can also use commit(), HOWEVER better used if you want confirmation that info has been saved correctly
                         }) {
                             Text(text = "Save Data")
                         }
@@ -173,7 +173,7 @@ class Week3 : ComponentActivity() {
     }
 }
 
-
+//updates the date a user picked, either overrides previous choices or default values
 @Composable
 fun DatePickerFunction(mDate: MutableState<String>): DatePickerDialog { //the parameters and the return value after colon
 
@@ -188,7 +188,7 @@ fun DatePickerFunction(mDate: MutableState<String>): DatePickerDialog { //the pa
     //get calendar instance
     val mCalendar = Calendar.getInstance()
 
-    //take date from this calendar
+    //take current date from this calendar
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
@@ -208,7 +208,7 @@ fun DatePickerFunction(mDate: MutableState<String>): DatePickerDialog { //the pa
     )
 }
 
-
+//same deal, used to OVERRIDE either default or previous selections
 @Composable
 fun TimePickerFunction(mTime: MutableState<String>): TimePickerDialog { //the parameters and the return value after colon
 
@@ -250,7 +250,7 @@ fun countRowsByLocation(context: Context, fileName: String, location: String): I
 
     //try to open csv and read each line
     try {
-        val inputStream = assets.open(fileName) //open file
+        val inputStream = assets.open(fileName) //open file (from asset folder)
 
         //create buffer for reading
         val reader = BufferedReader(InputStreamReader(inputStream))
