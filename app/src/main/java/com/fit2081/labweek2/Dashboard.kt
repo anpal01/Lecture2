@@ -81,6 +81,9 @@ class Dashboard : ComponentActivity() {
 
                         var textFieldValue by remember { mutableStateOf("") }
 
+
+                        //when we confirm, code takes the value FROM THE FUNCTION and puts it into the text field variable here
+                        //the onconfirm itself is a function (anonymous)
                         ShowButtonAndModal( onConfirm = {textFieldValue = it
                         })
 
@@ -213,7 +216,7 @@ fun TopBar() {
 
 
 @Composable
-fun ShowButtonAndModal(onConfirm: (String) -> Unit) {
+fun ShowButtonAndModal(onConfirm: (String) -> Unit) { //parameter is callback function once user confirms input in modal, what to do AFTER confirming
 
     //status of alertdialogs visibility
     var showDialog by remember { mutableStateOf(false) } //set to false to hide modal
@@ -233,19 +236,21 @@ fun ShowButtonAndModal(onConfirm: (String) -> Unit) {
             onDismissRequest = {showDialog = false},
             title = { Text("Enter Name") },
             text = {
-                //Column {
+
                     OutlinedTextField(
                         value = textFieldValue,
                         onValueChange = { textFieldValue = it },
                         label = { Text("Your name") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(16.dp))
+
+                //simply reiterates whats being typed into the field
                     if (textFieldValue.isNotEmpty()) {
 
                         Text("Your name is: $textFieldValue")
                     }
-               // }
             },
 
             confirmButton = {
@@ -253,12 +258,15 @@ fun ShowButtonAndModal(onConfirm: (String) -> Unit) {
                 Button(
                     onClick = {
                         showDialog = false
+
+                        //if we confirm, uses the callback function WITH the text entered
+                        //passes value from modal to the caller (oncreate in this case)
                         onConfirm(textFieldValue)
                     }) {
                     Text("Confirm")
                 }
             },
-            dismissButton = {
+            dismissButton = { //if clicked, closes modal
                 Button(
                     onClick = {showDialog = false}) {
                     Text("Cancel")
