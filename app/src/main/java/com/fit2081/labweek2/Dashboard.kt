@@ -1,5 +1,6 @@
 package com.fit2081.labweek2
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +9,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,6 +23,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -31,6 +35,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -46,6 +51,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.fit2081.labweek2.ui.theme.LabWeek2Theme
 
 class Dashboard : ComponentActivity() {
@@ -72,7 +78,17 @@ class Dashboard : ComponentActivity() {
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        //add content here
+
+                        var textFieldValue by remember { mutableStateOf("") }
+
+                        ShowButtonAndModal( onConfirm = {textFieldValue = it
+                        })
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        if(textFieldValue.isNotEmpty()) {
+                            Text("Hello $textFieldValue", fontSize = 40.sp)
+                        }
                     }
                 }
             }
@@ -192,9 +208,64 @@ fun TopBar() {
         },
         scrollBehavior = scrollBehaviour,
     )
-
-
 }
 
+
+
+@Composable
+fun ShowButtonAndModal(onConfirm: (String) -> Unit) {
+
+    //status of alertdialogs visibility
+    var showDialog by remember { mutableStateOf(false) } //set to false to hide modal
+
+    //whats entered into the text field
+    var textFieldValue by remember { mutableStateOf("") }
+
+    //button to show dialog, sets showDialog to true in order to show interface
+    Button(
+        onClick = {showDialog = true}
+    ) {
+        Text("Open Modal")
+    }
+
+    if(showDialog) {
+        AlertDialog(
+            onDismissRequest = {showDialog = false},
+            title = { Text("Enter Name") },
+            text = {
+                //Column {
+                    OutlinedTextField(
+                        value = textFieldValue,
+                        onValueChange = { textFieldValue = it },
+                        label = { Text("Your name") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    if (textFieldValue.isNotEmpty()) {
+
+                        Text("Your name is: $textFieldValue")
+                    }
+               // }
+            },
+
+            confirmButton = {
+
+                Button(
+                    onClick = {
+                        showDialog = false
+                        onConfirm(textFieldValue)
+                    }) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {showDialog = false}) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+}
 
 
