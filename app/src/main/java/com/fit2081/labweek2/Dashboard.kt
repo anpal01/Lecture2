@@ -121,6 +121,9 @@ fun MyBottomBar() {
             Button(onClick = { context.startActivity(Intent(context, Quiz_Page::class.java)) }) {
                 Text("Quiz Time!")
             }
+            Button(onClick = { context.startActivity(Intent(context, Greeting::class.java)) }) {
+                Text("Greet Me")
+            }
         }
     )
 }
