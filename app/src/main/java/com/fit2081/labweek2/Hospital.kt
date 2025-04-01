@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -34,58 +36,61 @@ class Hospital : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LabWeek2Theme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
-                var patientName by  remember { mutableStateOf("") }
-                var patientAge by  remember { mutableStateOf("") }
-                var patientAddress by  remember { mutableStateOf("") }
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Column(modifier = Modifier
+                        .padding(innerPadding),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+
+                        var patientName by  remember { mutableStateOf("") }
+                        var patientAge by  remember { mutableStateOf("") }
+                        var patientAddress by  remember { mutableStateOf("") }
 
 
-                TextField(value = patientName,
-                    onValueChange = {patientName = it},
-                    label = { Text("Enter your name") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                        TextField(value = patientName,
+                            onValueChange = {patientName = it},
+                            label = { Text("Enter your name") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                TextField(value = patientAge,
-                    onValueChange = {patientAge = it},
-                    label = { Text("Enter your age") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                        TextField(value = patientAge,
+                            onValueChange = {patientAge = it},
+                            label = { Text("Enter your age") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                TextField(value = patientAddress,
-                    onValueChange = {patientAddress = it},
-                    label = { Text("Enter your address") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                        TextField(value = patientAddress,
+                            onValueChange = {patientAddress = it},
+                            label = { Text("Enter your address") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                val numberOfPatients by viewModel.allPatients.collectAsState(initial = emptyList())
+                        val numberOfPatients by viewModel.allPatients.collectAsState(initial = emptyList())
 
-                Button(onClick = { viewModel.insert(
-                    Patient(
-                        name = patientName,
-                        age = patientAge.toInt(),
-                        address = patientAddress
-                    )
-                )}
+                        Button(onClick = { viewModel.insert(
+                            Patient(
+                                name = patientName,
+                                age = patientAge.toInt(),
+                                address = patientAddress
+                            )
+                        )}
 
-                ) {
-                    Text("Add Patient")
+                        ) {
+                            Text("Add Patient")
+                        }
+
+                        Button(onClick = { viewModel.deleteAllPatients()}
+                        ) {
+                            Text("Delete All Patients")
+                        }
+
+                        Text(
+                            text = "Number of Patients: $numberOfPatients",
+                            fontSize = 20.sp
+                        )
+
+
+                    }
                 }
-
-                Button(onClick = { viewModel.deleteAllPatients()}
-                ) {
-                    Text("Delete All Patients")
-                }
-
-                Text(
-                    text = "Number of Patients: $numberOfPatients",
-                    fontSize = 20.sp
-                )
 
             }
         }
