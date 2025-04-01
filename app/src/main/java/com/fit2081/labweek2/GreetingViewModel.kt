@@ -9,10 +9,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+//viewmodels hold data that the ui needs to display, any changes the ui goes through wont affect the data as the processing for it is independant
 class GreetingViewModel : ViewModel() {
 
+    //details what variables will be displayed in the ui as well as variable processing
+
     var userName by mutableStateOf("")
-        private set
+        private set //no external mods, security effort, only editable via viewmodel
 
 
     var greetingMessage by mutableStateOf("")
@@ -29,9 +33,10 @@ class GreetingViewModel : ViewModel() {
 
     fun generateGreeting() {
 
-        viewModelScope.launch {
+        viewModelScope.launch { //viewmodelscope = coroutine (asynch process), lasts for as long as viewmodel is there
+            //used to run the delay without blocking ui view
             isLoading = true
-            delay(1000)
+            delay(1000) //simulates delay
 
             if (userName.isNotBlank()) {
                 val currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)

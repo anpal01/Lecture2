@@ -49,16 +49,19 @@ class Greeting : ComponentActivity() {
     }
 }
 
+//in order to use viewmodel data and methods, needs to have instance of it
+
 @Composable
 fun GreetingScreen(innerPaddingValues: PaddingValues, viewModel: GreetingViewModel = viewModel()){
 
+    //these variables keep track of any changes via viewmodel and updates it
     val userName = viewModel.userName
     val greetingMessage = viewModel.greetingMessage
     val isLoading = viewModel.isLoading
 
 
     TextField(value = userName,
-        onValueChange = {viewModel.updateUsername(it)},
+        onValueChange = {viewModel.updateUsername(it)},//custom method called via the viewmethod instance
         label = { Text("Enter your name") },
         modifier = Modifier.fillMaxWidth()
     )
