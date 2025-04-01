@@ -124,6 +124,9 @@ fun MyBottomBar() {
             Button(onClick = { context.startActivity(Intent(context, Greeting::class.java)) }) {
                 Text("Greet Me")
             }
+            Button(onClick = { context.startActivity(Intent(context, Hospital::class.java)) }) {
+                Text("Hospital")
+            }
         }
     )
 }

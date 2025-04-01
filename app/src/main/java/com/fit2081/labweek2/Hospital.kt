@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.fit2081.labweek2.data.Patient
 import com.fit2081.labweek2.data.PatientViewModel
@@ -80,6 +81,11 @@ class Hospital : ComponentActivity() {
                 ) {
                     Text("Delete All Patients")
                 }
+
+                Text(
+                    text = "Number of Patients: $numberOfPatients",
+                    fontSize = 20.sp
+                )
 
             }
         }
