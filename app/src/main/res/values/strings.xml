@@ -5,4 +5,5 @@
     <string name="title_activity_quiz_result">QuizResult</string>
     <string name="title_activity_week3">week3</string>
     <string name="title_activity_greeting">Greeting</string>
+    <string name="title_activity_hospital">Hospital</string>
 </resources>
