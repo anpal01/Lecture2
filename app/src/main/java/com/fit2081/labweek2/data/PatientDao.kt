@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface PatientDao {
 
     //all of the retrieval functions/functions that deal with taking, leaving and updating data
+    //all declared here, no functionality coded
 
     //suspend is a coroutine function, using suspent at start of methods shows that the functions called from a coroutine
 
