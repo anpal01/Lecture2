@@ -10,10 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PatientDao {
 
-    //all of the retrieval functions/functions that deal with taking, leaving and updating data
+    //all of the retrieval functions/functions that deal with taking, deleting and updating data
+    //HOW DOES IT INTERACT, not actually doing it, repo does that
     //all declared here, no functionality coded
 
-    //suspend is a coroutine function, using suspent at start of methods shows that the functions called from a coroutine
+    //suspend is a coroutine function, using suspend at start of methods shows that the functions called from a coroutine/can be done in parallel with functions
 
     @Insert
     suspend fun insert(patient: Patient)
@@ -21,13 +22,13 @@ interface PatientDao {
     @Update
     suspend fun update(patient: Patient)
 
-    @Delete
+    @Delete //annotations ensure that right sql query is used, maps
     suspend fun delete(patient: Patient)
 
     @Query("DELETE FROM patients")//means that the function does the same as this sql query
     suspend fun deleteAllPatients()
 
     @Query("SELECT * FROM patients ORDER BY id ASC")
-    fun getAllPatients(): Flow<List<Patient>>
+    fun getAllPatients(): Flow<List<Patient>> //flow automatically creates a new list when records are changed
 
 }

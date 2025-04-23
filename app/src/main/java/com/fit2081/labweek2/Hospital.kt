@@ -29,7 +29,7 @@ import com.fit2081.labweek2.ui.theme.LabWeek2Theme
 
 class Hospital : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val viewModel: PatientViewModel = ViewModelProvider(
+        val viewModel: PatientViewModel = ViewModelProvider( //gets instance of viewmodel
             this, PatientViewModel.PatientViewModelFactory(this@Hospital)
         )[PatientViewModel::class.java]
         super.onCreate(savedInstanceState)
@@ -64,9 +64,10 @@ class Hospital : ComponentActivity() {
                             modifier = Modifier.fillMaxWidth()
                         )
 
+                        //retrieves list of patients, default value is an empty list, this updates in real time
                         val numberOfPatients by viewModel.allPatients.collectAsState(initial = emptyList())
 
-                        Button(onClick = { viewModel.insert(
+                        Button(onClick = { viewModel.insert( //adding a new patient from the text fields
                             Patient(
                                 name = patientName,
                                 age = patientAge.toInt(),

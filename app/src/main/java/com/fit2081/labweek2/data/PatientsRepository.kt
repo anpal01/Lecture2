@@ -3,7 +3,10 @@ package com.fit2081.labweek2.data
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 
-class PatientsRepository{
+class PatientsRepository{ //abstracts how data is retreived from ui
+    //if need to change data sources, edit it here
+    //can define rules for which data source to use (e.g. if smth is n/a, check where)
+    //handles data operations by utilising the DAO
 
     //holds patientdao instance
     var patientDao: PatientDao
@@ -30,6 +33,7 @@ class PatientsRepository{
         patientDao.deleteAllPatients()
     }
 
+    //retrieves all patient data from db
     fun getAllPatients(): Flow<List<Patient>> = patientDao.getAllPatients()
 
 }

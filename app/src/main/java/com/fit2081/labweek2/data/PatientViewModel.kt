@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class PatientViewModel(context: Context) : ViewModel() {
+class PatientViewModel(context: Context) : ViewModel() { //handles data retrieval and prep, while ui displays it
+    //prevents data loss/unnecessary queries
 
     //create repo instance to talk to db
     private val patientRepo = PatientsRepository(context)
@@ -16,8 +17,8 @@ class PatientViewModel(context: Context) : ViewModel() {
     val allPatients: Flow<List<Patient>> = patientRepo.getAllPatients()
 
     //viewmodel version of the db methods, gives it to viewmodel
-    fun insert(patient: Patient) = viewModelScope.launch {
-        patientRepo.insert(patient)
+    fun insert(patient: Patient) = viewModelScope.launch { //updates the viewmodel afterwards
+        patientRepo.insert(patient) //inserts the new patient
     }
 
     fun delete(patient: Patient) = viewModelScope.launch {
