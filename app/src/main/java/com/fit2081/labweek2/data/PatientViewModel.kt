@@ -31,12 +31,15 @@ class PatientViewModel(context: Context) : ViewModel() { //handles data retrieva
         patientRepo.deleteAllPatients()
     }
 
-    //sets context for view models
+    //how to create a new patient view model (like a factory)
+    //factories = pattern to create objects without exposing creation logic
+    //instead of PatientViewModel(_all of the parameters_), can just invoke factory
     class PatientViewModelFactory(context: Context) : ViewModelProvider.Factory {
-        private val context = context.applicationContext
+        private val context = context.applicationContext //uses app context instead of activity context. why? it lives longer/prevents memory leaks
 
-        override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            PatientViewModel(context) as T
+        override fun <T : ViewModel> //T = generic type that extends viewmodel
+                create(modelClass: Class<T>): T = //cakker passes class obj for type of vm wanted
+            PatientViewModel(context) as T //creating the vm and casting it to t type, we already know t is a vm so its ok
 
     }
 
